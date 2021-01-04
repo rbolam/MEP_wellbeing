@@ -39,6 +39,5 @@ groups <- groupss %>%
 
 groups %>% count(group)
 
-groups
-
+write_csv(groups, "outputs/groups.csv")
 
