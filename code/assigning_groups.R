@@ -8,16 +8,16 @@ sinceld <- c("Abdulrasheed", "Bekah", "Eleanor", "Hazel", "Hollie", "Natasha", "
 
 
 ## MEP members that have joined before lockdown:
-beforeld <- c("Andy", "Becca", "Ben", "Chess", "Ellen", "Emily", "Jess", "Khunsa", 
-              "Laura", "Louise", "Marion", "Mark", "Nicola", "Rike", "Roy", "Simone", 
-              "Steve", "Thea", "Will R", "Zarah")
+beforeld <- c("Aileen", "Andy", "Becca", "Ben", "Chess", "Ellen", "Emily", "Eylem",
+              "Giles", "Jess", "Khunsa", "Laura", "Louise", "Marion", "Mark", "Nicola", 
+              "Rike", "Roy", "Simone", "Steve", "Thea", "Will R", "Zarah")
 
 
 ## Creating groups:
 set.seed(2021)
 
-group <- rep(1:5, 2)
-group2 <- rep(5:1, 4)
+group <- rep(1:6, 2)
+group2 <- rep(6:1, 4)
 
 
 ## Df of new group members, so they don't all end up in one:
@@ -27,6 +27,7 @@ groupss <- groupss[1:8,]
 
 ## Df of other group members:
 groupsb <- data.frame(cbind(group = group2, name = sample(beforeld)))
+groupsb <- groupsb[1:23,]
 
 
 ## Bind dfs and show groups:
