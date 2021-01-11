@@ -70,12 +70,24 @@ mepwell %>%
   count(Group) ->
   ppgroup
 
-head(mepwell)
-
+## Calculate how much time each group spent, divided by group members:
 mepwell %>% 
   select(1:3, 11) %>% 
-  group_by(Group, Activity) %>% 
+  group_by(Group) %>% 
   summarise(sum = sum(tot_time)) %>% 
   left_join(ppgroup) %>% 
   mutate(sumpp = sum / n) ->
   progresssummary
+
+## Add line breaks to very long group name:
+progresssummary[4,1] <- "TEAM: - If you're\nhappy and you know\nit, wash your hands"
+
+ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Group)) +
+  geom_col() +
+  scale_fill_manual(values = colours_vector[c(1, 6, 8, 10, 14, 28)]) +
+  labs(x = "Time per person in minutes", y = "") +
+  theme_minimal() +
+  theme(legend.position = "none")
+ggsave("outputs/minutespppgroup.jpg")
+
+
