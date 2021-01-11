@@ -12,8 +12,9 @@ colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
 #team_colours <- cuttlefish::find_segmented(colours_vector, 6)
 #team_colours <- cuttlefish::find_prominent(colours_vector, 6)
 library(scales)
-show_col(colours_vector)
-team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#89BA2C", "#E5F6F9", "#E9E1D6")
+#show_col(colours_vector)
+team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#B9E39D", "#E5F6F9", "#E9E1D6")
+show_col(team_colours)
 
 ## read in data:
 mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
