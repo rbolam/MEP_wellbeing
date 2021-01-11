@@ -55,3 +55,17 @@ mepwell$tot_time <- rowSums(mepwell[4:10], na.rm = TRUE)
 ggplot(mepwell) + geom_col(aes(x = Activity, y = tot_time, fill = Group)) + theme(axis.text.x = element_text(angle = 90))
 
 median(mepwell$tot_time)
+
+
+
+###----------------- Plot of time spent per person per group -----------------####
+
+
+### Calculate people per group:
+mepwell %>% 
+  select(1:3, 11) %>% 
+  filter(tot_time != 0) %>% 
+  select(Group, Name) %>% 
+  unique() %>% 
+  count(Group) ->
+  ppgroup
