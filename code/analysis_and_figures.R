@@ -13,8 +13,9 @@ colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
 #team_colours <- cuttlefish::find_prominent(colours_vector, 6)
 library(scales)
 #show_col(colours_vector)
+show_col(colours_vector)
 team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#B9E39D", "#E5F6F9", "#E9E1D6")
-show_col(team_colours)
+
 
 ## read in data:
 mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
@@ -104,6 +105,8 @@ mepwell$Category[mepwell$Activity == "Weaving"] <- "Arts, crafts and cooking"
 mepwell$Category[mepwell$Activity == "Workout"] <- "Active indoors"
 mepwell$Category[mepwell$Activity == "Yoga"] <- "Active indoors"
 mepwell$Category[mepwell$Activity == "Yoga/ workout"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Built Snowman"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Games"] <- "Playing games"
 
 ###----------------- Setting up plot theme  -----------------####
 
