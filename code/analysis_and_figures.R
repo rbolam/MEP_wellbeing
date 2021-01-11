@@ -69,3 +69,13 @@ mepwell %>%
   unique() %>% 
   count(Group) ->
   ppgroup
+
+head(mepwell)
+
+mepwell %>% 
+  select(1:3, 11) %>% 
+  group_by(Group, Activity) %>% 
+  summarise(sum = sum(tot_time)) %>% 
+  left_join(ppgroup) %>% 
+  mutate(sumpp = sum / n) ->
+  progresssummary
