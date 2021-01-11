@@ -3,8 +3,6 @@
 
 library(tidyverse)
 library(here)
-#library(googlesheets4)
-library(devtools)
 #devtools::install_github("jcbain/cuttlefish")
 
 ## get colour pallette for plotting with
@@ -26,17 +24,13 @@ mepwell <- mepwell %>%
   rename("Jan_08" = "08-Jan") %>%
   rename("Jan_09" = "09-Jan") %>% 
   rename("Jan_10" = "10-Jan") %>%
-  mutate(Jan_04 = as.numeric(Jan_04)) %>%
-  mutate(Jan_05 = as.numeric(Jan_05)) %>%
-  mutate(Jan_06 = as.numeric(Jan_06)) %>%
-  mutate(Jan_07 = as.numeric(Jan_07)) %>%
-  mutate(Jan_08 = as.numeric(Jan_08)) %>%
-  mutate(Jan_09 = as.numeric(Jan_09)) %>%
-  mutate(Jan_10 = as.numeric(Jan_10))
+  mutate_at(vars(starts_with("Jan")), as.numeric) ## change all vars that start with Jan to numeric
 
 table(mepwell$Activity)
 
 # there is almost certainly a neater way to do this but I don't know it and this is how I change variables!
+
+## i can never do this sort of thing in a neater way either!
 mepwell$Activity[mepwell$Activity == "Cycle"] <- "Cycling"
 mepwell$Activity[mepwell$Activity == "Ballet"] <- "Dancing"
 mepwell$Activity[mepwell$Activity == "Dance class"] <- "Dancing"
