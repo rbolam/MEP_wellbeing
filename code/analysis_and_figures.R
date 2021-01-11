@@ -3,15 +3,22 @@
 
 library(tidyverse)
 library(here)
+#library(googlesheets4)
+library(devtools)
 #devtools::install_github("jcbain/cuttlefish")
 
 ## get colour pallette for plotting with
-colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 32)
+colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
+#team_colours <- cuttlefish::find_segmented(colours_vector, 6)
+#team_colours <- cuttlefish::find_prominent(colours_vector, 6)
+library(scales)
+show_col(colours_vector)
+team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#89BA2C", "#E5F6F9", "#E9E1D6")
 
 ## read in data:
 mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
 
-## explore and tidy the data
+###----------------- Tidy the data -----------------####
 
 mepwell[mepwell== "-" ] <- NA
 
@@ -24,46 +31,114 @@ mepwell <- mepwell %>%
   rename("Jan_08" = "08-Jan") %>%
   rename("Jan_09" = "09-Jan") %>% 
   rename("Jan_10" = "10-Jan") %>%
-  mutate_at(vars(starts_with("Jan")), as.numeric) ## change all vars that start with Jan to numeric
+  mutate(Jan_04 = as.numeric(Jan_04)) %>%
+  mutate(Jan_05 = as.numeric(Jan_05)) %>%
+  mutate(Jan_06 = as.numeric(Jan_06)) %>%
+  mutate(Jan_07 = as.numeric(Jan_07)) %>%
+  mutate(Jan_08 = as.numeric(Jan_08)) %>%
+  mutate(Jan_09 = as.numeric(Jan_09)) %>%
+  mutate(Jan_10 = as.numeric(Jan_10)) %>%
+  filter_at(vars(Jan_04:Jan_10),any_vars(!is.na(.)))
 
-table(mepwell$Activity)
+# create activity categories
+mepwell$Category[mepwell$Activity == "Ab workout"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Arts and Crafts"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Arts/Crafts"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Baking"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Ballet"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Boardgames"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Body pump"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Capoeira"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Card Games/Board Games"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Choir"] <- "Being musical"
+mepwell$Category[mepwell$Activity == "Cross stitch"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Cross trainer"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Cycle"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Cycling"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Dance class"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Duolingo"] <- "Learning/practicing a skill"
+mepwell$Category[mepwell$Activity == "Entertaining Mischief (cat)"] <- "Time with pets"
+mepwell$Category[mepwell$Activity == "Gaming"] <- "Playing video games"
+mepwell$Category[mepwell$Activity == "Hanging out with my mice"] <- "Time with pets"
+mepwell$Category[mepwell$Activity == "HIIT"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Home workout"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Jigsaw"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Juggling"] <- "Learning/practicing a skill"
+mepwell$Category[mepwell$Activity == "Kickboxing"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Knitting"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Language Puzzles"] <- "Learning/practicing a skill"
+mepwell$Category[mepwell$Activity == "Listen to audiobook"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Long bubble bath"] <- "Self care"
+mepwell$Category[mepwell$Activity == "Meditating"] <- "Meditation"
+mepwell$Category[mepwell$Activity == "Oddities: you tube dance (sigh) - also discovered the joys of wireless headphones and trying out some hiphop moves with no one watching in the dark :)"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Painting"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Physiotherapy/pilates"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Playing fetch with the Kipster"] <- "Time with pets"
+mepwell$Category[mepwell$Activity == "Playing in the snow"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Playing with ferrets"] <- "Time with pets"
+mepwell$Category[mepwell$Activity == "reading (Hornblower)"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Reading for fun"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Reading"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Reading (Earthsea)"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Running"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Rollerskating"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Sea swim"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Singing and Dancing like a lunatic"] <- "Being musical"
+mepwell$Category[mepwell$Activity == "Snap card game"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Stretch Class/ Body Conditioning"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Stretching/yoga"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Stuff with Izzy: reading, activity book"] <- "Time with kids"
+mepwell$Category[mepwell$Activity == "Surfing"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Table tennis"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Tabletop Games"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Tap"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Video games"] <- "Playing video games"
+mepwell$Category[mepwell$Activity == "Violin"] <- "Being musical"
+mepwell$Category[mepwell$Activity == "Walk"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "walking"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Walking"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Walking my dog"] <- "Time with pets"
+mepwell$Category[mepwell$Activity == "Walking/running w/podcast"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Weaving"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Workout"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Yoga"] <- "Active indoors"
+mepwell$Category[mepwell$Activity == "Yoga/ workout"] <- "Active indoors"
 
-# there is almost certainly a neater way to do this but I don't know it and this is how I change variables!
+###----------------- Setting up plot theme  -----------------####
 
-## i can never do this sort of thing in a neater way either!
-mepwell$Activity[mepwell$Activity == "Cycle"] <- "Cycling"
-mepwell$Activity[mepwell$Activity == "Ballet"] <- "Dancing"
-mepwell$Activity[mepwell$Activity == "Dance class"] <- "Dancing"
-mepwell$Activity[mepwell$Activity == "Tap"] <- "Dancing"
-mepwell$Activity[mepwell$Activity == "Oddities: you tube dance (sigh) - also discovered the joys of wireless headphones and trying out some hiphop moves with no one watching in the dark :)"] <- "Dancing"
-mepwell$Activity[mepwell$Activity == "Entertaining Mischief (cat)"] <- "Pet time"
-mepwell$Activity[mepwell$Activity == "Playing with ferrets"] <- "Pet time"
-mepwell$Activity[mepwell$Activity == "Walking my dog"] <- "Pet time"
-mepwell$Activity[mepwell$Activity == "Playing fetch with the Kipster"] <- "Pet time"
-mepwell$Activity[mepwell$Activity == "Hanging out with my mice"] <- "Pet time"
-mepwell$Activity[mepwell$Activity == "reading (Hornblower)"] <- "Reading"
-mepwell$Activity[mepwell$Activity == "Reading for fun"] <- "Reading"
-mepwell$Activity[mepwell$Activity == "Walk"] <- "Walking"
-mepwell$Activity[mepwell$Activity == "walking"] <- "Walking"
-mepwell$Activity[mepwell$Activity == "Home workout"] <- "Workout"
-
-mepwell$tot_time <- rowSums(mepwell[4:10], na.rm = TRUE)
-
-## Figure ideas - could just do a couple so that there are still some things to plot as a group in thursday meetings!
-## Most active team, most popular activity (lollipop plot?), peak/slump activity days (get mean/median and do deviation from plot), tracking folks activity levels throughout the week
-
-ggplot(mepwell) + geom_col(aes(x = Activity, y = tot_time, fill = Group)) + theme(axis.text.x = element_text(angle = 90))
-
-median(mepwell$tot_time)
+plottheme <- theme(
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor = element_blank(),
+  plot.background = element_rect(fill = "#4D4D4D", colour = NA),
+  panel.background = element_rect(fill = "#878787", colour = NA),
+  legend.background = element_rect(fill = "#4D4D4D", colour = NA),
+  axis.text = element_text(colour = "linen"),
+  axis.title = element_text(colour = "linen")
+)
 
 
+###----------------- Plot of time spent per activity  -----------------####
+
+mepwell <- mepwell %>%
+  mutate(tot_time = rowSums(.[4:10], na.rm = TRUE)) %>%
+  group_by(Category) %>%
+  mutate(Cat_time = sum(tot_time))
+
+ggplot(mepwell, aes(x = tot_time, y = reorder(Category, Cat_time), fill = Group)) + 
+  geom_col() + 
+  scale_fill_manual(values = team_colours, labels = function(x) str_wrap(x, width = 7)) + 
+  labs(x = "Time per activity in minutes", y = "") +
+  plottheme +
+  theme(legend.position = "none")
+ggsave("outputs/minutespactivity.jpg")
 
 ###----------------- Plot of time spent per person per group -----------------####
 
 
 ### Calculate people per group:
 mepwell %>% 
-  select(1:3, 11) %>% 
+  ungroup() %>%
+  select(1:3, 12) %>% 
   filter(tot_time != 0) %>% 
   select(Group, Name) %>% 
   unique() %>% 
@@ -72,7 +147,8 @@ mepwell %>%
 
 ## Calculate how much time each group spent, divided by group members:
 mepwell %>% 
-  select(1:3, 11) %>% 
+  ungroup() %>%
+  select(1:3, 12) %>% 
   group_by(Group) %>% 
   summarise(sum = sum(tot_time)) %>% 
   left_join(ppgroup) %>% 
@@ -84,10 +160,8 @@ progresssummary[4,1] <- "TEAM: - If you're\nhappy and you know\nit, wash your ha
 
 ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Group)) +
   geom_col() +
-  scale_fill_manual(values = colours_vector[c(1, 6, 8, 10, 14, 28)]) +
+  scale_fill_manual(values = team_colours) +
   labs(x = "Time per person in minutes", y = "") +
-  theme_minimal() +
+  plottheme +
   theme(legend.position = "none")
 ggsave("outputs/minutespppgroup.jpg")
-
-
