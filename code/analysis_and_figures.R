@@ -4,16 +4,16 @@
 library(tidyverse)
 library(here)
 #library(googlesheets4)
-library(devtools)
+#library(devtools)
 #devtools::install_github("jcbain/cuttlefish")
 
 ## get colour pallette for plotting with
-colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
+#colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
 #team_colours <- cuttlefish::find_segmented(colours_vector, 6)
 #team_colours <- cuttlefish::find_prominent(colours_vector, 6)
-library(scales)
+#library(scales)
 #show_col(colours_vector)
-show_col(colours_vector)
+#show_col(colours_vector)
 team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#B9E39D", "#E5F6F9", "#E9E1D6")
 
 
@@ -25,22 +25,9 @@ mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
 mepwell[mepwell== "-" ] <- NA
 
 mepwell <- mepwell %>%
-  select(1:10) %>% # only keep the days we've got data til - 8th Jan
-  rename("Jan_04" = "04-Jan") %>%
-  rename("Jan_05" = "05-Jan") %>%
-  rename("Jan_06" = "06-Jan") %>%
-  rename("Jan_07" = "07-Jan") %>%
-  rename("Jan_08" = "08-Jan") %>%
-  rename("Jan_09" = "09-Jan") %>% 
-  rename("Jan_10" = "10-Jan") %>%
-  mutate(Jan_04 = as.numeric(Jan_04)) %>%
-  mutate(Jan_05 = as.numeric(Jan_05)) %>%
-  mutate(Jan_06 = as.numeric(Jan_06)) %>%
-  mutate(Jan_07 = as.numeric(Jan_07)) %>%
-  mutate(Jan_08 = as.numeric(Jan_08)) %>%
-  mutate(Jan_09 = as.numeric(Jan_09)) %>%
-  mutate(Jan_10 = as.numeric(Jan_10)) %>%
-  filter_at(vars(Jan_04:Jan_10),any_vars(!is.na(.)))
+  select(1:17) %>% # only keep the days we've got data til - 8th Jan
+  mutate_at(vars(starts_with("Jan")), funs(as.numeric)) %>%
+  filter_at(vars(starts_with("Jan")), any_vars(!is.na(.)))
 
 # create activity categories
 mepwell$Category[mepwell$Activity == "Ab workout"] <- "Active indoors"
@@ -108,6 +95,29 @@ mepwell$Category[mepwell$Activity == "Yoga/ workout"] <- "Active indoors"
 mepwell$Category[mepwell$Activity == "Built Snowman"] <- "Active outdoors"
 mepwell$Category[mepwell$Activity == "Games"] <- "Playing games"
 
+unique(mepwell$Activity[is.na(mepwell$Category)]) # check out the new activities - 20 new ones!
+
+mepwell$Category[mepwell$Activity == "Zoom quiz"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Sudoko"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Football"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Walking / Hiking"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Jogging"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Stuff with kids: reading books, playing, homework activities"]  <- "Time with kids"
+mepwell$Category[mepwell$Activity == "Meditation"] <- "Meditation"
+mepwell$Category[mepwell$Activity == "Walking - always with Ninjapie"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Reading/ audiobook"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Board games & card games"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Podcast"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Reading to my daughter"]  <- "Time with kids"
+mepwell$Category[mepwell$Activity == "Art with my children"]  <- "Time with kids"
+mepwell$Category[mepwell$Activity == "Playing cards with children"]  <- "Time with kids"
+mepwell$Category[mepwell$Activity == "audiobook"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "podcast"] <- "Reading/Listening to books"
+mepwell$Category[mepwell$Activity == "Jigsaw/other puzzles"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Guitar/Berimbau"] <- "Being musical"
+mepwell$Category[mepwell$Activity == "Kneading bread"] <- "Arts, crafts and cooking"
+
+
 ###----------------- Setting up plot theme  -----------------####
 
 plottheme <- theme(
@@ -124,7 +134,7 @@ plottheme <- theme(
 ###----------------- Plot of time spent per activity  -----------------####
 
 mepwell <- mepwell %>%
-  mutate(tot_time = rowSums(.[4:10], na.rm = TRUE)) %>%
+  mutate(tot_time = rowSums(.[4:17], na.rm = TRUE)) %>%
   group_by(Category) %>%
   mutate(Cat_time = sum(tot_time))
 
@@ -134,7 +144,7 @@ ggplot(mepwell, aes(x = tot_time, y = reorder(Category, Cat_time), fill = Group)
   labs(x = "Time per activity in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespactivity.jpg")
+ggsave("outputs/minutespactivity_week2.jpg")
 
 ###----------------- Plot of time spent per person per group -----------------####
 
@@ -142,7 +152,7 @@ ggsave("outputs/minutespactivity.jpg")
 ### Calculate people per group:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 12) %>% 
+  select(1:3, 19) %>% 
   filter(tot_time != 0) %>% 
   select(Group, Name) %>% 
   unique() %>% 
@@ -152,7 +162,7 @@ mepwell %>%
 ## Calculate how much time each group spent, divided by group members:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 12) %>% 
+  select(1:3, 19) %>% 
   group_by(Group) %>% 
   summarise(sum = sum(tot_time)) %>% 
   left_join(ppgroup) %>% 
@@ -168,4 +178,4 @@ ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Gro
   labs(x = "Time per person in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespppgroup.jpg")
+ggsave("outputs/minutespppgroup_week2.jpg")
