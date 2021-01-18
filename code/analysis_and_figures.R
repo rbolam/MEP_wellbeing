@@ -11,11 +11,10 @@ library(here)
 #colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
 #team_colours <- cuttlefish::find_segmented(colours_vector, 6)
 #team_colours <- cuttlefish::find_prominent(colours_vector, 6)
-#library(scales)
+library(scales)
 #show_col(colours_vector)
-#show_col(colours_vector)
-team_colours <- c("#768D3B", "#886F50", "#6AB0DB", "#B9E39D", "#E5F6F9", "#E9E1D6")
-
+show_col(team_colours)
+team_colours <- c("3" = "#768D3B", "Royal purple" = "#886F50", "Goal Diggers" = "#6AB0DB", "TEAM: - If you're\nhappy and you know\nit, wash your hands" = "#B9E39D", "Well in Hell" = "#E5F6F9", Wellabies = "#E9E1D6")
 
 ## read in data:
 mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
@@ -28,6 +27,8 @@ mepwell <- mepwell %>%
   select(1:17) %>% # only keep the days we've got data til - 8th Jan
   mutate_at(vars(starts_with("Jan")), funs(as.numeric)) %>%
   filter_at(vars(starts_with("Jan")), any_vars(!is.na(.)))
+
+mepwell$Group[mepwell$Group == "TEAM: - If you're happy and you know it, wash your hands"] <- "TEAM: - If you're\nhappy and you know\nit, wash your hands"
 
 # create activity categories
 mepwell$Category[mepwell$Activity == "Ab workout"] <- "Active indoors"
@@ -170,7 +171,6 @@ mepwell %>%
   progresssummary
 
 ## Add line breaks to very long group name:
-progresssummary[4,1] <- "TEAM: - If you're\nhappy and you know\nit, wash your hands"
 
 ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Group)) +
   geom_col() +
