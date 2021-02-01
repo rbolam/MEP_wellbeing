@@ -11,9 +11,9 @@ library(here)
 #colours_vector <- cuttlefish::create_palette("MEP_Logo_transparent.png", n = 20)
 #team_colours <- cuttlefish::find_segmented(colours_vector, 6)
 #team_colours <- cuttlefish::find_prominent(colours_vector, 6)
-library(scales)
+#library(scales)
 #show_col(colours_vector)
-show_col(team_colours)
+#show_col(team_colours)
 team_colours <- c("3" = "#768D3B", "Royal purple" = "#886F50", "Goal Diggers" = "#6AB0DB", "TEAM: - If you're\nhappy and you know\nit, wash your hands" = "#B9E39D", "Well in Hell" = "#E5F6F9", Wellabies = "#E9E1D6")
 
 ## read in data:
