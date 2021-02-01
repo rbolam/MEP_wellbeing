@@ -30,106 +30,60 @@ mepwell <- mepwell %>%
 
 mepwell$Group[mepwell$Group == "TEAM: - If you're happy and you know it, wash your hands"] <- "TEAM: - If you're\nhappy and you know\nit, wash your hands"
 
+
 # create activity categories
-mepwell$Category[mepwell$Activity == "Ab workout"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Arts and Crafts"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Arts/Crafts"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Baking"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Ballet"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Boardgames"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Body pump"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Capoeira"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Card Games/Board Games"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Choir"] <- "Being musical"
-mepwell$Category[mepwell$Activity == "Cross stitch"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Cross trainer"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Cycle"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Cycling"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Dance class"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Duolingo"] <- "Learning/practicing a skill"
-mepwell$Category[mepwell$Activity == "Entertaining Mischief (cat)"] <- "Time with pets"
-mepwell$Category[mepwell$Activity == "Gaming"] <- "Playing video games"
-mepwell$Category[mepwell$Activity == "Hanging out with my mice"] <- "Time with pets"
-mepwell$Category[mepwell$Activity == "HIIT"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Home workout"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Jigsaw"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Juggling"] <- "Learning/practicing a skill"
-mepwell$Category[mepwell$Activity == "Kickboxing"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Knitting"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Language Puzzles"] <- "Learning/practicing a skill"
-mepwell$Category[mepwell$Activity == "Listen to audiobook"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Long bubble bath"] <- "Self care"
-mepwell$Category[mepwell$Activity == "Meditating"] <- "Meditation"
-mepwell$Category[mepwell$Activity == "Oddities: you tube dance (sigh) - also discovered the joys of wireless headphones and trying out some hiphop moves with no one watching in the dark :)"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Painting"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Physiotherapy/pilates"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Playing fetch with the Kipster"] <- "Time with pets"
-mepwell$Category[mepwell$Activity == "Playing in the snow"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Playing with ferrets"] <- "Time with pets"
-mepwell$Category[mepwell$Activity == "reading (Hornblower)"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Reading for fun"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Reading"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Reading (Earthsea)"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Running"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Rollerskating"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Sea swim"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Singing and Dancing like a lunatic"] <- "Being musical"
-mepwell$Category[mepwell$Activity == "Snap card game"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Stretch Class/ Body Conditioning"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Stretching/yoga"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Stuff with Izzy: reading, activity book"] <- "Time with kids"
-mepwell$Category[mepwell$Activity == "Surfing"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Table tennis"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Tabletop Games"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Tap"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Video games"] <- "Playing video games"
-mepwell$Category[mepwell$Activity == "Violin"] <- "Being musical"
-mepwell$Category[mepwell$Activity == "Walk"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "walking"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Walking"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Walking my dog"] <- "Time with pets"
-mepwell$Category[mepwell$Activity == "Walking/running w/podcast"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Weaving"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Workout"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Yoga"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Yoga/ workout"] <- "Active indoors"
-mepwell$Category[mepwell$Activity == "Built Snowman"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Games"] <- "Playing games"
 
-unique(mepwell$Activity[is.na(mepwell$Category)]) # check out the new activities - 20 new ones!
 
-mepwell$Category[mepwell$Activity == "Zoom quiz"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Sudoko"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Football"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Walking / Hiking"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Jogging"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Stuff with kids: reading books, playing, homework activities"]  <- "Time with kids"
-mepwell$Category[mepwell$Activity == "Meditation"] <- "Meditation"
-mepwell$Category[mepwell$Activity == "Walking - always with Ninjapie"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Reading/ audiobook"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Board games & card games"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Podcast"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Reading to my daughter"]  <- "Time with kids"
-mepwell$Category[mepwell$Activity == "Art with my children"]  <- "Time with kids"
-mepwell$Category[mepwell$Activity == "Playing cards with children"]  <- "Time with kids"
-mepwell$Category[mepwell$Activity == "audiobook"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "podcast"] <- "Reading/Listening to books"
-mepwell$Category[mepwell$Activity == "Jigsaw/other puzzles"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Guitar/Berimbau"] <- "Being musical"
-mepwell$Category[mepwell$Activity == "Kneading bread"] <- "Arts, crafts and cooking"
+mepwell$Category <- as.factor(mepwell$Activity)
 
-unique(mepwell$Activity[is.na(mepwell$Category)]) # check out the new activities - 9 new ones!
-unique(mepwell$Category)
-
-mepwell$Category[mepwell$Activity == "Board games"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Bike ride"] <- "Active outdoors"
-mepwell$Category[mepwell$Activity == "Embroidery"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Baking with children for fun"] <- "Time with kids"
-mepwell$Category[mepwell$Activity == "Exploding kittens game"] <- "Playing games"
-mepwell$Category[mepwell$Activity == "Drawing"] <- "Arts, crafts and cooking"
-mepwell$Category[mepwell$Activity == "Phoning family/friends"] <- "Self care"
-mepwell$Category[mepwell$Activity == "Bubble bath"] <- "Self care"
-mepwell$Category[mepwell$Activity == "Virtual choir practice"] <- "Being musical"
+mepwell$Category <- 
+  fct_collapse(mepwell$Category,
+               `Active indoors` = c("Ab workout", "Ballet", "Body pump", "Capoeira",
+                                    "Cross trainer", "Dance class", "HIIT", "Kickboxing", 
+                                    "Oddities: you tube dance (sigh) - also discovered the joys of wireless headphones and trying out some hiphop moves with no one watching in the dark :)",
+                                    "Physiotherapy/pilates", 
+                                    "Stretch Class/ Body Conditioning", "Stretching/yoga",
+                                    "Table tennis", "Tap", "Workout", "Yoga", 
+                                    "Yoga/ workout"),
+               `Active outdoors` = c("Bike ride", "Built Snowman", "Cycle", "Cycling", 
+                                     "Football", "Jogging", "Playing in the snow", 
+                                     "Running", "Surfing", "Walk", "walking", "Walking", 
+                                     "Walking - always with Ninjapie", "Walking / Hiking", 
+                                     "Walking/running w/podcast"),
+               `Arts, crafts and cooking` = c("Arts and Crafts", "Arts/Crafts", "Baking",
+                                              "Cross stitch", "Drawing", "Embroidery", 
+                                              "Kneading bread", "Knitting", "Painting", 
+                                              "Weaving"),
+               `Being musical` = c("Choir", "Guitar/Berimbau", 
+                                   "Singing and Dancing like a lunatic", "Violin", 
+                                   "Virtual choir practice"),
+               `Learning/practicing a skill` = c("Duolingo", "Juggling", 
+                                                 "Language Puzzles"),
+               Meditation = c("Meditating", "Meditation"),
+               `Playing games` = c("Board games", "Board games & card games", 
+                                   "Boardgames", "Exploding kittens game", "Games", 
+                                   "Jigsaw", "Jigsaw/other puzzles", "Snap card game",
+                                   "Sudoko", "Tabletop Games", "Zoom quiz"),
+               `Playing video games` = c("Gaming", "Video games"),
+               `Reading/Listening to books` = c("audiobook", "Listen to audiobook", 
+                                                "Podcast", "podcast", "Reading", 
+                                                "Reading (Earthsea)", 
+                                                "reading (Hornblower)", 
+                                                "Reading/ audiobook"),
+               `Self care` = c("Bubble bath", "Long bubble bath", 
+                               "Phoning family/friends"),
+               `Time with kids` = c("Art with my children", "Baking with children for fun",
+                                    "Playing cards with children", 
+                                    "Reading to my daughter", 
+                                    "Stuff with Izzy: reading, activity book", 
+                                    "Stuff with kids: reading books, playing, homework activities"),
+               `Time with pets` = c("Entertaining Mischief (cat)", 
+                                    "Hanging out with my mice", 
+                                    "Playing fetch with the Kipster", 
+                                    "Playing with ferrets", "Walking my dog")
+               
+               )
+levels(mepwell$Category)
 
 
 
