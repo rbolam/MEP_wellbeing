@@ -24,7 +24,7 @@ mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
 mepwell[mepwell== "-" ] <- NA
 
 mepwell <- mepwell %>%
-  select(1:17) %>% # only keep the days we've got data til - 8th Jan
+  select(1:24) %>% # only keep the days we've got data til - 8th Jan
   mutate_at(vars(starts_with("Jan")), funs(as.numeric)) %>%
   filter_at(vars(starts_with("Jan")), any_vars(!is.na(.)))
 
@@ -118,6 +118,20 @@ mepwell$Category[mepwell$Activity == "Jigsaw/other puzzles"] <- "Playing games"
 mepwell$Category[mepwell$Activity == "Guitar/Berimbau"] <- "Being musical"
 mepwell$Category[mepwell$Activity == "Kneading bread"] <- "Arts, crafts and cooking"
 
+unique(mepwell$Activity[is.na(mepwell$Category)]) # check out the new activities - 9 new ones!
+unique(mepwell$Category)
+
+mepwell$Category[mepwell$Activity == "Board games"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Bike ride"] <- "Active outdoors"
+mepwell$Category[mepwell$Activity == "Embroidery"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Baking with children for fun"] <- "Time with kids"
+mepwell$Category[mepwell$Activity == "Exploding kittens game"] <- "Playing games"
+mepwell$Category[mepwell$Activity == "Drawing"] <- "Arts, crafts and cooking"
+mepwell$Category[mepwell$Activity == "Phoning family/friends"] <- "Self care"
+mepwell$Category[mepwell$Activity == "Bubble bath"] <- "Self care"
+mepwell$Category[mepwell$Activity == "Virtual choir practice"] <- "Being musical"
+
+
 
 ###----------------- Setting up plot theme  -----------------####
 
@@ -135,7 +149,7 @@ plottheme <- theme(
 ###----------------- Plot of time spent per activity  -----------------####
 
 mepwell <- mepwell %>%
-  mutate(tot_time = rowSums(.[4:17], na.rm = TRUE)) %>%
+  mutate(tot_time = rowSums(.[4:24], na.rm = TRUE)) %>%
   group_by(Category) %>%
   mutate(Cat_time = sum(tot_time))
 
@@ -145,7 +159,7 @@ ggplot(mepwell, aes(x = tot_time, y = reorder(Category, Cat_time), fill = Group)
   labs(x = "Time per activity in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespactivity_week2.jpg")
+ggsave("outputs/minutespactivity_week3.jpg")
 
 ###----------------- Plot of time spent per person per group -----------------####
 
@@ -153,7 +167,7 @@ ggsave("outputs/minutespactivity_week2.jpg")
 ### Calculate people per group:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 19) %>% 
+  select(1:3, 26) %>% 
   filter(tot_time != 0) %>% 
   select(Group, Name) %>% 
   unique() %>% 
@@ -163,7 +177,7 @@ mepwell %>%
 ## Calculate how much time each group spent, divided by group members:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 19) %>% 
+  select(1:3, 26) %>% 
   group_by(Group) %>% 
   summarise(sum = sum(tot_time)) %>% 
   left_join(ppgroup) %>% 
@@ -178,4 +192,4 @@ ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Gro
   labs(x = "Time per person in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespppgroup_week2.jpg")
+ggsave("outputs/minutespppgroup_week3.jpg")
