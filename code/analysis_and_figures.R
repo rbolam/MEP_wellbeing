@@ -14,7 +14,7 @@ library(here)
 #library(scales)
 #show_col(colours_vector)
 #show_col(team_colours)
-team_colours <- c("3" = "#768D3B", "Royal purple" = "#886F50", "Goal Diggers" = "#6AB0DB", "TEAM: - If you're\nhappy and you know\nit, wash your hands" = "#B9E39D", "Well in Hell" = "#E5F6F9", Wellabies = "#E9E1D6")
+team_colours <- c("3" = "#768D3B", "Royal purple" = "#886F50", "Goaldiggers" = "#6AB0DB", "TEAM: - If you're\nhappy and you know\nit, wash your hands" = "#B9E39D", "Well in Hell" = "#E5F6F9", Wellabies = "#E9E1D6")
 
 ## read in data:
 mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
@@ -24,7 +24,7 @@ mepwell <- read_csv(here("outputs", "MEP_Wellbeing.csv"))
 mepwell[mepwell== "-" ] <- NA
 
 mepwell <- mepwell %>%
-  select(1:24) %>% # only keep the days we've got data til - 8th Jan
+  select(1:31) %>% # only keep the days we've got data til - 8th Jan
   mutate_at(vars(starts_with("Jan")), funs(as.numeric)) %>%
   filter_at(vars(starts_with("Jan")), any_vars(!is.na(.)))
 
@@ -32,7 +32,6 @@ mepwell$Group[mepwell$Group == "TEAM: - If you're happy and you know it, wash yo
 
 
 # create activity categories
-
 
 mepwell$Category <- as.factor(mepwell$Activity)
 
@@ -44,19 +43,19 @@ mepwell$Category <-
                                     "Physiotherapy/pilates", 
                                     "Stretch Class/ Body Conditioning", "Stretching/yoga",
                                     "Table tennis", "Tap", "Workout", "Yoga", 
-                                    "Yoga/ workout"),
+                                    "Yoga/ workout", "HIIT / S&C"),
                `Active outdoors` = c("Bike ride", "Built Snowman", "Cycle", "Cycling", 
                                      "Football", "Jogging", "Playing in the snow", 
                                      "Running", "Surfing", "Walk", "walking", "Walking", 
                                      "Walking - always with Ninjapie", "Walking / Hiking", 
-                                     "Walking/running w/podcast"),
+                                     "Walking/running w/podcast", "running"),
                `Arts, crafts and cooking` = c("Arts and Crafts", "Arts/Crafts", "Baking",
                                               "Cross stitch", "Drawing", "Embroidery", 
                                               "Kneading bread", "Knitting", "Painting", 
-                                              "Weaving"),
+                                              "Weaving", "Macrame"),
                `Being musical` = c("Choir", "Guitar/Berimbau", 
                                    "Singing and Dancing like a lunatic", "Violin", 
-                                   "Virtual choir practice"),
+                                   "Virtual choir practice", "online concert", "Relaxing with music"),
                `Learning/practicing a skill` = c("Duolingo", "Juggling", 
                                                  "Language Puzzles"),
                Meditation = c("Meditating", "Meditation"),
@@ -75,12 +74,11 @@ mepwell$Category <-
                `Time with kids` = c("Art with my children", "Baking with children for fun",
                                     "Playing cards with children", 
                                     "Reading to my daughter", 
-                                    "Stuff with Izzy: reading, activity book", 
-                                    "Stuff with kids: reading books, playing, homework activities"),
+                                    "Stuff with Izzy: reading, activity boo, hide and seekk",                                     "Stuff with kids: reading books, playing, homework activities"),
                `Time with pets` = c("Entertaining Mischief (cat)", 
                                     "Hanging out with my mice", 
                                     "Playing fetch with the Kipster", 
-                                    "Playing with ferrets", "Walking my dog")
+                                    "Playing with ferrets", "Walking my dog"), `Social things` = c("Babysitting Niece", "Skype family", "Pub quiz")
                
                )
 levels(mepwell$Category)
@@ -103,7 +101,7 @@ plottheme <- theme(
 ###----------------- Plot of time spent per activity  -----------------####
 
 mepwell <- mepwell %>%
-  mutate(tot_time = rowSums(.[4:24], na.rm = TRUE)) %>%
+  mutate(tot_time = rowSums(.[4:31], na.rm = TRUE)) %>%
   group_by(Category) %>%
   mutate(Cat_time = sum(tot_time))
 
@@ -113,7 +111,7 @@ ggplot(mepwell, aes(x = tot_time, y = reorder(Category, Cat_time), fill = Group)
   labs(x = "Time per activity in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespactivity_week3.jpg")
+ggsave("outputs/minutespactivity_finalweek.jpg")
 
 ###----------------- Plot of time spent per person per group -----------------####
 
@@ -121,7 +119,7 @@ ggsave("outputs/minutespactivity_week3.jpg")
 ### Calculate people per group:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 26) %>% 
+  select(1:3, 33) %>% 
   filter(tot_time != 0) %>% 
   select(Group, Name) %>% 
   unique() %>% 
@@ -131,7 +129,7 @@ mepwell %>%
 ## Calculate how much time each group spent, divided by group members:
 mepwell %>% 
   ungroup() %>%
-  select(1:3, 26) %>% 
+  select(1:3, 33) %>% 
   group_by(Group) %>% 
   summarise(sum = sum(tot_time)) %>% 
   left_join(ppgroup) %>% 
@@ -146,4 +144,4 @@ ggplot(progresssummary, aes(x = sumpp, y = fct_reorder(Group, sumpp), fill = Gro
   labs(x = "Time per person in minutes", y = "") +
   plottheme +
   theme(legend.position = "none")
-ggsave("outputs/minutespppgroup_week3.jpg")
+ggsave("outputs/minutespppgroup_finalweek.jpg")
