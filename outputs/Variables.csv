@@ -1,33 +1,33 @@
-"Name","Postcode","N_household","N_children","Comp_increase"
-"Tasha",NA,NA,NA,NA
-"Will O",NA,NA,NA,NA
-"Giles",NA,NA,NA,NA
-"Steve",NA,NA,NA,NA
-"Will R",NA,NA,NA,NA
-"Hollie",NA,NA,NA,NA
-"Bekah",NA,NA,NA,NA
-"Emily",NA,NA,NA,NA
-"Khunsa",NA,NA,NA,NA
-"Zarah",NA,NA,NA,NA
-"Jess",NA,NA,NA,NA
-"Nicholas",NA,NA,NA,NA
-"Abdulrasheed",NA,NA,NA,NA
-"Mark",NA,NA,NA,NA
-"Andy",NA,NA,NA,NA
-"Thea",NA,NA,NA,NA
-"Simone",NA,NA,NA,NA
-"Ava",NA,NA,NA,NA
-"Chess",NA,NA,NA,NA
-"Rike",NA,NA,NA,NA
-"Ben",NA,NA,NA,NA
-"Aileen",NA,NA,NA,NA
-"Eleanor",NA,NA,NA,NA
-"Marion",NA,NA,NA,NA
-"Becca",NA,NA,NA,NA
-"Eylem",NA,NA,NA,NA
-"Roy",NA,NA,NA,NA
-"Hazel",NA,NA,NA,NA
-"Ellen",NA,NA,NA,NA
-"Laura",NA,NA,NA,NA
-"Nicola",NA,NA,NA,NA
-"Louise",NA,NA,NA,NA
+Name,Postcode,N_household,N_children,Comp_increase,Latitude,Longitude
+Tasha,NE6,7,0,Y,54.977925,-1.5788486
+Will O,NA,NA,NA,NA,NA,NA
+Giles,NA,NA,NA,NA,NA,NA
+Steve,NA,NA,NA,NA,NA,NA
+Will R,NA,NA,NA,NA,NA,NA
+Hollie,NE1,9,0,Y,54.967722,-1.6157868
+Bekah,NA,NA,NA,NA,NA,NA
+Emily,NE2,2,0,Y,54.97565,-1.5971668
+Khunsa,NE3,4,2,Y,55.004963,-1.6195117
+Zarah,FK8,2,0,Y,56.126163,-3.9416823
+Jess,NE3,2,0,Y,55.004963,-1.6195117
+Nicholas,NE2,6,0,Y,54.97565,-1.5971668
+Abdulrasheed,NA,NA,NA,NA,NA,NA
+Mark,NE3,1,0,Y,55.004963,-1.6195117
+Andy,NA,NA,NA,NA,NA,NA
+Thea,NE8,2,0,Y,54.96337,-1.6037555
+Simone,NE48 ,5,3,Y,55.181141,-2.4373963
+Ava,NA,NA,NA,NA,NA,NA
+Chess,NA,NA,NA,NA,NA,NA
+Rike,NE39,2,0,Y,54.92831,-1.7384859
+Ben,NE6,2,0,N,54.977925,-1.5788486
+Aileen,NA,NA,NA,NA,NA,NA
+Eleanor,YO26,2,0,N,53.96043,-1.0923361
+Marion,NE3,4,2,Y,55.004963,-1.6195117
+Becca,NE6,2,0,Y,54.977925,-1.5788486
+Eylem,NA,NA,NA,NA,NA,NA
+Roy,NE2,1,0,N,54.97565,-1.5971668
+Hazel,NA,NA,NA,NA,NA,NA
+Ellen,NE12,2,0,N,55.018397,-1.5679932
+Laura,NE6,2,0,Y,54.977925,-1.5788486
+Nicola,NE6,2,0,N,54.977925,-1.5788486
+Louise,NE20,2,0,Y,55.059458,-1.7489357
